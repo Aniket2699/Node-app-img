@@ -1,5 +1,5 @@
 pipeline {
-  agent { label 'docker' } // or 'any' if your agent has Docker
+  agent any
   environment {
     AWS_REGION     = 'us-east-1'
     AWS_ACCOUNT_ID = '124931565674'

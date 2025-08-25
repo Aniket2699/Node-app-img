@@ -26,7 +26,7 @@ pipeline {
 
         stage('Ensure ECR Repository') {
             steps {
-                withAWS(region: "${AWS_REGION}", credentials: 'aws-credentials-id') {
+                withAWS(region: "${AWS_REGION}", credentials: 'aws-ecr') {
                     sh """
                     aws ecr describe-repositories --repository-names ${ECR_REPO} || \
                     aws ecr create-repository --repository-name ${ECR_REPO}

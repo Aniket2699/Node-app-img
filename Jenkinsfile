@@ -62,12 +62,17 @@ pipeline {
       echo "✅ Pushed $IMAGE:$IMAGE_TAG"
       // Option B trigger (manual from Jenkins): uncomment if you prefer Jenkins->Lambda
          withAWS(credentials: 'aws-ecr', region: "${env.AWS_REGION}") {
-           sh '''
-               aws lambda invoke \
-               --function-name image-post-push \
-               --payload '{"repository":"node-ecr","imageTag":"4fd94ba-9","image":"124931565674.dkr.ecr.us-east-1.amazonaws.com/node-ecr:4fd94ba-9"}' \
-               /dev/null
-              '''
+           sh """
+              cat > payload.json <<EOF
+                    {
+                "repository": "node-ecr",
+                "imageTag": "${IMAGE_TAG}",
+                "image": "${ECR_REPO}:${IMAGE_TAG}"
+               }
+               EOF
+
+         aws lambda invoke --function-name image-post-push --payload file://payload.json /dev/null
+             """
         }
     }
     failure {

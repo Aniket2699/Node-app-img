@@ -60,19 +60,19 @@ pipeline {
         }
 
         stage('Trigger Lambda') {
-            steps {
-                withAWS(region: "${AWS_REGION}", credentials: 'aws-ecr') {
-                    script {
-                        sh """
-                        aws lambda invoke \
-                        --function-name ${LAMBDA_FN} \
-                        --payload '{ "repository": "${ECR_REPO}", "imageTag": "${IMAGE_TAG}", "image": "124931565674.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPO}:${IMAGE_TAG}" }' \
-                        /dev/null
-                        """
-                    }
+    steps {
+        withAWS(region: "${AWS_REGION}", credentials: 'aws-ecr') {
+            script {
+                sh """
+                aws lambda invoke \
+                --function-name ${LAMBDA_FN} \
+                --payload '{\\"repository\\": \\"${ECR_REPO}\\", \\"imageTag\\": \\"${IMAGE_TAG}\\", \\"image\\": \\"124931565674.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPO}:${IMAGE_TAG}\\"}' \
+                /dev/null
+                """
                 }
-            }
-        }
+             }
+          }
+       }
     }
 
     post {

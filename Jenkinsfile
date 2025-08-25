@@ -61,7 +61,7 @@ pipeline {
 
         stage('Trigger Lambda') {
     steps {
-        withAWS(region: "${AWS_REGION}", credentials: 'aws-credentials-id') {
+        withAWS(region: "${AWS_REGION}", credentials: 'aws-ecr') {
             script {
                 writeFile file: 'payload.json', text: """{
                   "repository": "${ECR_REPO}",

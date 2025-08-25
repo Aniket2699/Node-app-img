@@ -6,7 +6,7 @@ pipeline {
     ECR_REPO       = 'node-ecr'
     ECR_REGISTRY   = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
     IMAGE          = "${ECR_REGISTRY}/${ECR_REPO}"
-    DOCKER_BUILDKIT = '1'
+    #DOCKER_BUILDKIT = '1'
   }
   options { timestamps() }
 

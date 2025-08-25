@@ -8,7 +8,7 @@ pipeline {
     IMAGE          = "${ECR_REGISTRY}/${ECR_REPO}"
   }
   options { timestamps() }
-//helo
+
     agent any
 
     environment {

@@ -61,13 +61,13 @@ pipeline {
     success {
       echo "✅ Pushed $IMAGE:$IMAGE_TAG"
       // Option B trigger (manual from Jenkins): uncomment if you prefer Jenkins->Lambda
-      // withAWS(credentials: 'aws-ecr', region: "${env.AWS_REGION}") {
-      //   sh '''
-      //     aws lambda invoke --function-name image-post-push --payload \
-      //       "{\\"repository\\": \\"$ECR_REPO\\", \\"imageTag\\": \\"$IMAGE_TAG\\", \\"image\\": \\"$IMAGE:$IMAGE_TAG\\"}" \
-      //       /dev/null
-      //   '''
-      // }
+         withAWS(credentials: 'aws-ecr', region: "${env.AWS_REGION}") {
+           sh '''
+            aws lambda invoke --function-name image-post-push --payload \
+               "{\\"repository\\": \\"$ECR_REPO\\", \\"imageTag\\": \\"$IMAGE_TAG\\", \\"image\\": \\"$IMAGE:$IMAGE_TAG\\"}" \
+               /dev/null
+           '''
+        }
     }
     failure {
       echo "❌ Build failed"

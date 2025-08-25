@@ -63,9 +63,11 @@ pipeline {
       // Option B trigger (manual from Jenkins): uncomment if you prefer Jenkins->Lambda
          withAWS(credentials: 'aws-ecr', region: "${env.AWS_REGION}") {
            sh '''
-            aws lambda invoke --function-name image-post-push --payload \
-               "{\\"repository\\": \\"$ECR_REPO\\", \\"imageTag\\": \\"$IMAGE_TAG\\", \\"image\\": \\"$IMAGE:$IMAGE_TAG\\"}" \
-               /dev/null
+            aws lambda invoke \
+             --function-name image-post-push \
+              --payload '{"repository":"node-ecr","imageTag":"4fd94ba-9","image":"124931565674.dkr.ecr.us-east-1.amazonaws.com/node-ecr:4fd94ba-9"}' \
+                /dev/null
+
            '''
         }
     }
